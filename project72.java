@@ -1,42 +1,63 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class project72 {
-    public static void main(String[] args) {
-        Queue<Integer> numbersQueue = new LinkedList<>();
-        Scanner scanner = new Scanner(System.in);
+class project72 {
+    private String nama;
+    private double gaji;
+    private int bulanMasuk;
 
-        System.out.println("Masukkan beberapa nilai (ketikkan 'selesai' untuk mengakhiri):");
-
-        while (true) {
-            String input = scanner.nextLine();
-
-            if (input.equalsIgnoreCase("selesai")) {
-                break;
-            }
-
-            try {
-                int number = Integer.parseInt(input);
-                numbersQueue.offer(number); // Memasukkan nilai ke dalam queue
-            } catch (NumberFormatException e) {
-                System.out.println("Masukkan nilai yang valid atau ketik 'selesai' untuk mengakhiri.");
-            }
-        }
-
-        int total = calculateTotal(numbersQueue);
-        System.out.println("Hasil penjumlahan: " + total);
-
-        scanner.close();
+    public Karyawan(String nama, double gaji, int bulanMasuk) {
+        this.nama = nama;
+        this.gaji = gaji;
+        this.bulanMasuk = bulanMasuk;
     }
 
-    private static int calculateTotal(Queue<Integer> numbersQueue) {
-        int total = 0;
+    public double hitungTotalGaji(int bulanSekarang) {
+        int jumlahBulan = bulanSekarang - bulanMasuk + 1;
+        return gaji * jumlahBulan;
+    }
 
-        while (!numbersQueue.isEmpty()) {
-            total += numbersQueue.poll(); // Mengeluarkan dan menghitung nilai dari queue
+    public String getNama() {
+        return nama;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Karyawan> daftarKaryawan = new ArrayList<>();
+
+        System.out.print("Masukkan jumlah karyawan: ");
+        int jumlahKaryawan = scanner.nextInt();
+
+        for (int i = 0; i < jumlahKaryawan; i++) {
+            System.out.println("\nMasukkan data untuk karyawan ke-" + (i + 1) + ":");
+            System.out.print("Nama: ");
+            scanner.nextLine(); // Membersihkan buffer
+            String nama = scanner.nextLine();
+            System.out.print("Gaji per bulan: ");
+            double gaji = scanner.nextDouble();
+            System.out.print("Bulan masuk (1-12): ");
+            int bulanMasuk = scanner.nextInt();
+
+            Karyawan karyawan = new Karyawan(nama, gaji, bulanMasuk);
+            daftarKaryawan.add(karyawan);
         }
 
-        return total;
+        System.out.print("\nMasukkan bulan sekarang (1-12): ");
+        int bulanSekarang = scanner.nextInt();
+
+        double totalGajiKeseluruhan = 0;
+        System.out.println("\nDaftar karyawan:");
+        for (Karyawan karyawan : daftarKaryawan) {
+            System.out.println("Nama: " + karyawan.getNama());
+            double totalGaji = karyawan.hitungTotalGaji(bulanSekarang);
+            totalGajiKeseluruhan += totalGaji;
+            System.out.println("Total gaji sampai bulan " + bulanSekarang + ": " + totalGaji);
+        }
+
+        System.out.println("\nTotal gaji keseluruhan untuk " + jumlahKaryawan + " karyawan sampai bulan " + bulanSekarang + ": " + totalGajiKeseluruhan);
+        System.out.println("Jumlah karyawan yang menerima gaji: " + jumlahKaryawan);
+        scanner.close();
     }
 }
