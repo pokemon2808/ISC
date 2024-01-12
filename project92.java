@@ -1,46 +1,36 @@
-import java.util.Scanner;
+// Definisikan kelas Book
+class Book {
+    // Variabel anggota (fields)
+    String title;
+    String author;
+    int pages;
+
+    // Konstruktor untuk menginisialisasi objek Book
+    public Book(String title, String author, int pages) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+    }
+
+    // Metode untuk menampilkan informasi buku
+    public void displayInfo() {
+        System.out.println("Title: " + title);
+        System.out.println("Author: " + author);
+        System.out.println("Pages: " + pages);
+    }
+}
 
 public class project92 {
-
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        // Membuat objek Book
+        Book book1 = new Book("Java Programming", "John Doe", 300);
+        Book book2 = new Book("Data Structures", "Jane Smith", 400);
 
-        System.out.print("Masukkan angka pertama: ");
-        double angka1 = scanner.nextDouble();
+        // Menampilkan informasi buku
+        System.out.println("Book 1:");
+        book1.displayInfo();
 
-        System.out.print("Masukkan angka kedua: ");
-        double angka2 = scanner.nextDouble();
-
-        System.out.print("Pilih operasi matematika (+, -, *, /): ");
-        char operator = scanner.next().charAt(0);
-
-        double hasil = 0;
-
-        switch (operator) {
-            case '+':
-                hasil = angka1 + angka2;
-                break;
-            case '-':
-                hasil = angka1 - angka2;
-                break;
-            case '*':
-                hasil = angka1 * angka2;
-                break;
-            case '/':
-                if (angka2 != 0) {
-                    hasil = angka1 / angka2;
-                } else {
-                    System.out.println("Error: Pembagian dengan nol tidak diizinkan.");
-                    System.exit(1);
-                }
-                break;
-            default:
-                System.out.println("Error: Operator tidak valid.");
-                System.exit(1);
-        }
-
-        System.out.println("Hasil: " + hasil);
-
-        scanner.close();
+        System.out.println("\nBook 2:");
+        book2.displayInfo();
     }
 }
